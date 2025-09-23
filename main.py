@@ -1,114 +1,97 @@
-# interface 1
-# gestionnaire de tâches
-
 import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
 
-class GestionnaireTache(tk.Tk):
+
+class Calculatrice(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Gestionnaire de Tâches")
-        self.geometry("500x800")
-        self.header()
-        self.to_do_entry()
-        self.add_tache()
-        self.list_tache()
-        self.tous_prioritaires()
-        self.perso_pro()
-        self.note_titre()
-        self.zone_texte()
-
-
-    def header(self):
-        frm = tk.Frame(self, bg="black")
-        frm.pack(side="top", fill="x")
-
-        lbl = tk.Label(frm, text="Ma TO-DO list", font=("Arial", 24, "bold"), fg="Black")
-        lbl.pack(side="top", fill="x")
-
-
-    def to_do_entry(self):
-        frm = tk.Frame(self)
-        frm.pack(side="top", fill="x")
-
-        entry = tk.Entry(frm, font=("Roboto", 12, "italic"))
-        entry.pack(side="top", fill="x", padx=64, pady=24)
-
-    def add_tache(self):
-        frm = tk.Frame(self)
-        frm.pack(side="top", fill="x")
-
-        btn = tk.Button(frm, text="Ajouter la tâche")
-        btn.pack()
-
-    def list_tache(self):
-        frm = tk.Frame(self)
-        frm.pack(side="top", fill="x")
-
-        liste = tk.Listbox(frm, font=("Arial", 12, "bold"))
-        liste.pack(side="top", fill="x", padx=24, pady=24)
-
-    def tous_prioritaires(self):
-        frm = tk.Frame(self)
-        frm.pack(side="top", fill="x")
-
-        btn = tk.Checkbutton(frm, text="Toutes les tâches sont prioritaires")
-        btn.pack()
-
-    def perso_pro(self):
-        frm = tk.Frame(self)
-        frm.pack(side="top", fill="x")
-
-        radio_button = tk.StringVar(value="Perso")
-        tk.Radiobutton(frm, text="Personnel", variable=radio_button, value="Perso").pack(side="top")
-        tk.Radiobutton(frm, text="Professionnel", variable=radio_button, value="Pro").pack(side="top")
-
-    def note_titre(self):
-        frm = tk.Frame(self)
-        frm.pack(side="top", fill="x")
-
-        lbl = tk.Label(frm, text="Notes sur la tâche selectionnée :")
-        lbl.pack(side="top", fill="x", padx=24)
-
-    def zone_texte(self):
-        frm = tk.Frame(self)
-        frm.pack(side="top", fill="x")
-
-        text = tk.Text(frm, font=("Arial", 12,))
-        text.pack(side="bottom", fill="x", padx=24, pady=24)
-
-
-class Formulaire(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Formulaire")
-        self.geometry("500x200")
+        self.title("Calculatrice")
+        self.geometry("300x200")
         self.creerwidget()
 
-
     def creerwidget(self):
-        frm_conteneur = tk.Frame(self, padx=10, pady=24, relief="solid", bd=1)
-        frm_conteneur.pack(fill="x", padx=10, pady=10)
+        frm_conteneur = tk.Frame(self, padx=10, pady=10)
+        frm_conteneur.pack(fill="both", expand=True)
 
-        frm_labentry = tk.Frame(frm_conteneur, padx=10, pady=10)
-        frm_labentry.pack(side="left", fill="x", padx=10)
+        # Entrées
+        tk.Label(frm_conteneur, text="Nombre 1:").pack()
+        self.entry_n1 = tk.Entry(frm_conteneur)
+        self.entry_n1.pack(fill="x", padx=5, pady=5)
 
-        ligne_nom = tk.Frame(frm_labentry, padx=10, pady=10)
-        ligne_nom.pack(side="top", fill="x")
+        tk.Label(frm_conteneur, text="Nombre 2:").pack()
+        self.entry_n2 = tk.Entry(frm_conteneur)
+        self.entry_n2.pack(fill="x", padx=5, pady=5)
 
-        tk.Label(ligne_nom, text = "Nom:").pack(side="left", padx=10)
-        tk.Entry(ligne_nom).pack(fill="x", expand=True, side="left")
+        # Bouton
+        bouton_calcul = tk.Button(frm_conteneur, text="Calculer", command=self.calculer)
+        bouton_calcul.pack(pady=10)
 
-        ligne_email = tk.Frame(frm_labentry, padx=10, pady=10)
-        ligne_email.pack(side="bottom", fill="x")
+    def calculer(self):
+        try:
+            n1 = float(self.entry_n1.get())
+            n2 = float(self.entry_n2.get())
+            resultat = n1 + n2
+            messagebox.showinfo("Résultat", f"La somme est : {resultat}")
+        except ValueError:
+            messagebox.showerror("Erreur", "Veuillez entrer des nombres valides.")
 
-        tk.Label(ligne_email, text="Email:").pack(side="left", padx=10)
-        tk.Entry(ligne_email).pack(fill="x", expand=True, side="left")
 
-        tk.Button(frm_conteneur, text="Valider").pack(side="right", fill="x", padx=5)
+#if __name__ == "__main__":
+    #Calculatrice().mainloop()
 
+# main.py
+import tkinter as tk
 
+class Calculator(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Ma Calculatrice")
+        self.resizable(False, False)
+        self._build_ui()
 
+    def _build_ui(self):
+        self.entry = tk.Entry(self, font=("Helvetica", 20), bd=5, relief="sunken", justify="right")
+        self.entry.grid(row=0, column=0, columnspan=4, padx=10, pady=10, sticky="we")
+        buttons = [
+            ('7',1,0),('8',1,1),('9',1,2),('/',1,3),
+            ('4',2,0),('5',2,1),('6',2,2),('*',2,3),
+            ('1',3,0),('2',3,1),('3',3,2),('-',3,3),
+            ('0',4,0),('.',4,1),('=',4,2),('+',4,3),
+        ]
+        for (txt,row,col) in buttons:
+            btn = tk.Button(self, text=txt, font=("Helvetica",18), width=4, height=1,
+                            command=lambda t=txt: self.on_button(t))
+            btn.grid(row=row, column=col, padx=5, pady=5)
+
+        # Clear and Quit
+        clr = tk.Button(self, text="C", font=("Helvetica",14), width=10, command=self.clear)
+        clr.grid(row=5, column=0, columnspan=2, pady=(0,10))
+        q = tk.Button(self, text="Quitter", font=("Helvetica",14), width=10, command=self.destroy)
+        q.grid(row=5, column=2, columnspan=2, pady=(0,10))
+
+    def on_button(self, char):
+        if char == "=":
+            try:
+                expr = self.entry.get()
+                # evaluation sécurisée minimale : limiter les caractères autorisés
+                allowed = "0123456789.+-*/() "
+                if any(c not in allowed for c in expr):
+                    self.entry.delete(0, tk.END)
+                    self.entry.insert(0, "Erreur")
+                    return
+                result = eval(expr)
+                self.entry.delete(0, tk.END)
+                self.entry.insert(0, str(result))
+            except Exception:
+                self.entry.delete(0, tk.END)
+                self.entry.insert(0, "Erreur")
+        else:
+            self.entry.insert(tk.END, char)
+
+    def clear(self):
+        self.entry.delete(0, tk.END)
 
 if __name__ == "__main__":
-    #GestionnaireTache().mainloop()
-    Formulaire().mainloop()
+    app = Calculator()
+    app.mainloop()
