@@ -36,7 +36,8 @@ class FormulaireGrid(tk.Tk):
         tk.Radiobutton(content, text="Personnel", variable=self.type, value="Perso").grid(row=5, column=1, sticky="w", pady=4)
         tk.Radiobutton(content, text="Professionnel", variable=self.type, value="Pro").grid(row=6, column=1, sticky="w")
 
-        tk.Button(content, text="Ajouter la tâche", state="disabled", command=self.ajouter_tache).grid(row=7, columnspan=2, padx=96, pady=24)
+        self.ajouter_bouton = (tk.Button(content, text="Ajouter la tâche", state="disabled", command=self.ajouter_tache))
+        self.ajouter_bouton.grid(row=7, columnspan=2, padx=96, pady=24)
 
         self.lb = tk.Listbox(content)
         self.lb.grid(row=8, column=0, columnspan=2, sticky="ew", padx=8, pady=24)
@@ -59,6 +60,16 @@ class FormulaireGrid(tk.Tk):
             return False
 
         return True
+
+    def valider_tache(self, *args):
+        tache = self.tache.get()
+        duree = self.duree.get()
+
+        tache_valide = len(tache) > 0
+        duree_valide = len(duree) > 0
+
+        if tache_valide and duree_valide:
+            self.ajouter_bouton(state=active)
 
 
 
