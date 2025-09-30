@@ -3,8 +3,8 @@ import tkinter as tk
 class FormulaireGrid(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Login Page")
-        self.geometry("400x100")
+        self.title("Gestionnaire de tâche")
+        self.geometry("400x800")
 
         # conteneur principal
         self.columnconfigure(0, weight=1)
@@ -17,6 +17,8 @@ class FormulaireGrid(tk.Tk):
         content.columnconfigure(2, weight=2)
         content.rowconfigure(0, weight=1)
         content.rowconfigure(1, weight=1)
+
+        tk.Label(content, text="Ma To-Do List").grid(row=0, columnspan=2, sticky="ew")
 
         tk.Label(content, text="Username :").grid(row=0, column=0, sticky="ew", padx=10, pady=5)
         tk.Label(content, text="Password :").grid(row=1, column=0, sticky="ew", padx=10, pady=5)

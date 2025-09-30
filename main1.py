@@ -110,5 +110,5 @@ class Formulaire(tk.Tk):
 
 
 if __name__ == "__main__":
-    #GestionnaireTache().mainloop()
-    Formulaire().mainloop()
+    GestionnaireTache().mainloop()
+    #Formulaire().mainloop()
