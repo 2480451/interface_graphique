@@ -81,12 +81,6 @@ class FormulaireGrid(tk.Tk):
         self.duree.delete(0, tk.END)
 
 
-    def valider_duree(self, duree):
-        if duree == "" or duree == "-" or duree.startswith("-") or isinstance(duree, str):
-            return False
-
-        return True
-
     def valider_tache(self, *args):
         tache = self.tache.get()
         duree = self.duree.get()
