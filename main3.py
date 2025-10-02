@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import messagebox
+
 
 class FormulaireGrid(tk.Tk):
     def __init__(self):
@@ -15,15 +17,27 @@ class FormulaireGrid(tk.Tk):
         content.columnconfigure(1, weight=1)
 
 
+        vcmd = (self.register(self.valider_entree), '%P')
+        invcmd = (self.register(self.entree_invalide),)
+
+        # Variables pour suivre les champs #
+        self.tache_var = tk.StringVar()
+        self.duree_var = tk.StringVar()
+
+        self.tache_var.trace_add("write", self.valider_tache)
+        self.duree_var.trace_add("write", self.valider_tache)
+
+
+
         self.titre = tk.Label(content, text="To-Do list", font=("Roboto", 20, "bold"))
         self.titre.grid(row=0, columnspan=2, sticky="ew", padx=5, pady=(4, 10))
 
         tk.Label(content, text="Taper la tâche à ajouter :").grid(row=2, column=0, sticky="w")
-        self.tache = (tk.Entry(content))
+        self.tache = (tk.Entry(content, textvariable=self.tache_var))
         self.tache.grid(row=2, column=1, sticky="ew", pady=8)
 
         tk.Label(content, text="Durée estimée de la tâche en minutes :").grid(row=3, column=0, sticky="w")
-        self.duree = (tk.Entry(content))
+        self.duree = tk.Entry(content, textvariable=self.duree_var, validate="key", validatecommand=vcmd, invalidcommand=invcmd)
         self.duree.grid(row=3, column=1, sticky="ew", pady=8)
 
         self.prioritaire = tk.BooleanVar(value=False)
@@ -41,6 +55,18 @@ class FormulaireGrid(tk.Tk):
 
         self.lb = tk.Listbox(content)
         self.lb.grid(row=8, column=0, columnspan=2, sticky="ew", padx=8, pady=24)
+
+
+    def valider_entree(self, nouvelle_valeur):
+        if (nouvelle_valeur.isdigit()) and (0<int(nouvelle_valeur)<480):
+            return True
+        return False
+
+    def entree_invalide(self):
+        self.bell()
+        messagebox.showwarning("Entrée invalide", "Veuillez entrer un entier positif.")
+
+
 
     def ajouter_tache(self):
         tache = self.tache.get()
@@ -69,9 +95,10 @@ class FormulaireGrid(tk.Tk):
         duree_valide = len(duree) > 0
 
         if tache_valide and duree_valide:
-            self.ajouter_bouton(state=active)
+            self.ajouter_bouton.config(state="normal")
 
-
+        else:
+            self.ajouter_bouton.config(state="disabled")
 
 
 if __name__ == "__main__":
