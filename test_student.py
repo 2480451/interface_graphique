@@ -24,6 +24,13 @@ def test_note_valide():
     assert g ==[75, 80]
     assert s ==[75,80]
 
+
+@pytest.mark.parametrize("note", [-1, 102, None])
+def test_note_valide(note):
+    s = Student("Sam")
+    with pytest.raises(ValueError):
+        s.add_note(note)
+
 @pytest.fixture
 def student():
     s = Student("Nom")
